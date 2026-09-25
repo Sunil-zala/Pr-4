@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066ff;
+            --primary-dark: #0052cc;
+            --secondary: #00d9ff;
+            --accent: #ff6b35;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f7fb;
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #4d9fff;
+                --primary-dark: #3d8fe5;
+                --secondary: #00e5ff;
+                --accent: #ff8555;
+                --bg-primary: #0f1419;
+                --bg-secondary: #1a1f2e;
+                --text-primary: #f0f4f8;
+                --text-secondary: #a0aec0;
+                --border: #2d3748;
+                --success: #34d399;
+                --warning: #fbbf24;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --primary: #4d9fff;
+            --primary-dark: #3d8fe5;
+            --secondary: #00e5ff;
+            --accent: #ff8555;
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a1f2e;
+            --text-primary: #f0f4f8;
+            --text-secondary: #a0aec0;
+            --border: #2d3748;
+            --success: #34d399;
+            --warning: #fbbf24;
+            color-scheme: dark;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 102, 255, 0.15);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -80px;
+            left: -80px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            font-weight: 500;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #ffffff;
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .tool-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.15);
+            background: var(--bg-primary);
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: iconBounce 0.6s ease-out;
+        }
+
+        @keyframes iconBounce {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        .tool-card:hover .tool-icon {
+            animation: iconPulse 0.6s ease-out;
+        }
+
+        @keyframes iconPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .tool-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .tool-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: rgba(0, 102, 255, 0.1);
+            color: var(--primary);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        /* Features Section */
+        .features {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .feature-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 102, 255, 0.1);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: featureBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes featureBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-item:hover .feature-icon {
+            animation: none;
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .feature-item h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+        }
+
+        .cta-section h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .btn-cta {
+            background: #ffffff;
+            color: var(--primary);
+            position: relative;
+            z-index: 2;
+            font-weight: 700;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: #ffffff;
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            main {
+                margin: 2rem auto;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features h2 {
+                font-size: 1.5rem;
+            }
+
+            .cta-section h3 {
+                font-size: 1.4rem;
+            }
+
+            nav {
+                gap: 0.5rem;
+            }
+
+            .nav-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Text selection */
+        ::selection {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Transitions */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI Tools Hub</h1>
+        <p>Discover powerful AI solutions for your business</p>
+        <nav>
+            <button class="nav-btn active">All Tools</button>
+            <button class="nav-btn">Content</button>
+            <button class="nav-btn">Analysis</button>
+            <button class="nav-btn">Automation</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon"></div>
+                <h3 class="tool-title">Content Generator</h3>
+                <p class="tool-description">Generate high-quality content in seconds. Perfect for blogs, social media, and marketing materials.</p>
+                <span class="tool-badge">Content</span>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon"></div>
+                <h3 class="tool-title">Data Analyzer</h3>
+                <p class="tool-description">Extract insights from complex datasets. Visualize patterns and trends automatically.</p>
+                <span class="tool-badge">Analysis</span>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon"></div>
+                <h3 class="tool-title">Chatbot Builder</h3>
+                <p class="tool-description">Create intelligent chatbots without coding. Deploy across multiple platforms instantly.</p>
+                <span class="tool-badge">Automation</span>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon"></div>
+                <h3 class="tool-title">Report Generator</h3>
+                <p class="tool-description">Automatically generate professional reports from raw data with customizable templates.</p>
+                <span class="tool-badge">Analysis</span>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon"></div>
+                <h3 class="tool-title">Design Assistant</h3>
+                <p class="tool-description">Get AI-powered design suggestions and improvements for your visual projects.</p>
+                <span class="tool-badge">Content</span>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon"></div>
+                <h3 class="tool-title">Task Automation</h3>
+                <p class="tool-description">Automate repetitive workflows and save hours every week with intelligent task management.</p>
+                <span class="tool-badge">Automation</span>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Why Choose AI Tools Hub?</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon"></div>
+                    <h3>Easy Integration</h3>
+                    <p>Seamlessly integrate with your existing tools and workflows in minutes.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"></div>
+                    <h3>Secure & Private</h3>
+                    <p>Enterprise-grade security with full data privacy and compliance.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"></div>
+                    <h3>Lightning Fast</h3>
+                    <p>Get results in seconds with our optimized AI infrastructure.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"></div>
+                    <h3>Cost Effective</h3>
+                    <p>Save money while increasing productivity with transparent pricing.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"></div>
+                    <h3>Precise Results</h3>
+                    <p>Advanced algorithms deliver accurate and reliable outcomes every time.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"></div>
+                    <h3>Scalable</h3>
+                    <p>Grows with your business from startup to enterprise needs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h3>Ready to Transform Your Workflow?</h3>
+            <p>Join thousands of businesses already using AI Tools Hub to work smarter</p>
+            <button class="btn btn-cta">Get Started Free</button>
+        </section>
+    </main>
+
+    <footer>
+        
+        <p>Empowering businesses with intelligent automation</p>
+        <div class="social-links">
+            <a href="#" title="Twitter">𝕏</a>
+            <a href="#" title="LinkedIn">in</a>
+            <a href="#" title="GitHub">⚙</a>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation filtering
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const toolCards = document.querySelectorAll('.tool-card');
+
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                navBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'none';
+                    setTimeout(() => {
+                        entry.target.style.animation = '';
+                    }, 10);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        toolCards.forEach(card => observer.observe(card));
+
+        // Smooth scroll for buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.classList.contains('btn-cta')) {
+                    e.preventDefault();
+                    // Add ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                }
+            });
+        });
+
+        // Theme toggle support
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+        prefersDark.addEventListener('change', (e) => {
+            document.documentElement.removeAttribute('data-theme');
+        });
+    </script>
+</body>
+</html>
