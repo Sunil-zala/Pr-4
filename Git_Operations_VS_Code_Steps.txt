@@ -1,0 +1,57 @@
+Steps to Perform Git Operations (Stage, Commit, Push, Pull) Using VS Code Source Control with AI-Generated Project Files
+
+1. Create AI-Generated Project Files
+   - Use an AI coding assistant to generate the required project files.
+   - Open the project folder in Visual Studio Code.
+   - Review the generated files and make sure the project works correctly.
+
+2. Initialize Git Repository
+   - Open the VS Code Terminal.
+   - Run:
+     git init
+   - This creates a Git repository for the project.
+
+3. Check Source Control
+   - Click the Source Control icon on the left side of VS Code.
+   - Git will display the files that have been added or modified.
+
+4. Stage the Files
+   - In Source Control, review the changed files.
+   - Click the '+' button next to each file to stage it.
+   - To stage all files, click the '+' button next to Changes.
+
+5. Configure Git User Information (if required)
+   - If Git asks for your name and email, run:
+     git config --global user.name "Your Name"
+     git config --global user.email "your-email@example.com"
+
+6. Commit the Changes
+   - Enter a suitable commit message in the Source Control message box.
+   - Example:
+     Initial project files
+   - Click Commit.
+
+7. Connect the Project to GitHub
+   - Create a new repository on GitHub.
+   - Copy the repository URL.
+   - In the VS Code Terminal, run:
+     git remote add origin YOUR_GITHUB_REPOSITORY_URL
+
+8. Push the Project
+   - In VS Code Source Control, click Sync Changes or Push.
+   - Alternatively, run:
+     git push -u origin main
+   - This uploads the committed project files to GitHub.
+
+9. Pull Changes
+   - If the project has new changes on GitHub, use Source Control and select Pull.
+   - Alternatively, run:
+     git pull origin main
+   - This downloads and merges the latest changes into the local project.
+
+10. Verify the Repository
+   - Open the GitHub repository in a browser.
+   - Confirm that the AI-generated project files and latest commits are visible.
+
+Result:
+The AI-generated project files were successfully staged, committed, pushed, and pulled using the VS Code Source Control interface.
